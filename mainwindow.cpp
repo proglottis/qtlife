@@ -2,19 +2,24 @@
 #include "ui_mainwindow.h"
 
 #include "standardboard.h"
+#include "standardlife.h"
 #include "boarditem.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass), boardTimer(0)
+    : QMainWindow(parent), ui(new Ui::MainWindowClass), lifeTimer(0)
 {
-    board = new StandardBoard(100, 100, true);
-    board->setParent(this);
+    Board *board1 = new StandardBoard(100, 100, true);
+    Board *board2 = new StandardBoard(100, 100, true);
+    life = new StandardLife(board1, board2);
+    life->setParent(this);
+    board1->setParent(life);
+    board1->setParent(life);
 
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
-    BoardItem *boarditem = new BoardItem(board);
-    QObject::connect(board, SIGNAL(stepped()), boarditem, SLOT(step()));
+    BoardItem *boarditem = new BoardItem(life->getBoard());
+    QObject::connect(life, SIGNAL(stepped(Board *)), boarditem, SLOT(step(Board *)));
     scene->addItem(boarditem);
 
     ui->gameView->setScene(scene);
@@ -28,13 +33,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionPlay_Pause_toggled(bool )
 {
-    if(boardTimer == 0) {
-        boardTimer = board->startTimer(100);
+    if(lifeTimer == 0) {
+        lifeTimer = life->startTimer(100);
         ui->actionPlay_Pause->setChecked(true);
     }
     else {
-        board->killTimer(boardTimer);
+        life->killTimer(lifeTimer);
         ui->actionPlay_Pause->setChecked(false);
-        boardTimer = 0;
+        lifeTimer = 0;
     }
 }

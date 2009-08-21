@@ -12,13 +12,10 @@ public:
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
     virtual bool isWrapped() const = 0;
+    virtual int getNeighbourCount(int x, int y) const = 0;
     virtual int getCell(int x, int y) const = 0;
     virtual void setCell(int x, int y, int value) = 0;
     virtual void toggleCell(int x, int y) = 0;
-    virtual void step() = 0;
-
-signals:
-    void stepped();
 };
 
 #endif // BOARD_H

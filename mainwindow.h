@@ -4,7 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <QGraphicsScene>
 
-#include "board.h"
+#include "life.h"
 
 namespace Ui
 {
@@ -21,8 +21,8 @@ public:
 
 private:
     Ui::MainWindowClass *ui;
-    Board *board;
-    int boardTimer;
+    Life *life;
+    int lifeTimer;
     QGraphicsScene *scene;
 
 private slots:

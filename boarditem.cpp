@@ -20,6 +20,8 @@ QRectF BoardItem::boundingRect() const
 void BoardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                       QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
     for(int x=0; x<_board->getWidth(); x++) {
         for(int y=0; y<_board->getHeight(); y++) {
             if(_board->getCell(x, y) > 0) {
@@ -35,13 +37,14 @@ void BoardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     }
 }
 
-void BoardItem::step()
+void BoardItem::step(Board *board)
 {
+    _board = board;
     update(boundingRect());
 }
 
 void BoardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     _board->toggleCell(event->pos().x() / 11, event->pos().y() / 11);
-    step();
+    update(boundingRect());
 }

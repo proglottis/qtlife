@@ -20,7 +20,7 @@ public:
                QWidget *widget);
 
 public slots:
-    void step();
+    void step(Board *board);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

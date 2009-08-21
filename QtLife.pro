@@ -7,9 +7,13 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     board.cpp \
     standardboard.cpp \
-    boarditem.cpp
+    boarditem.cpp \
+    life.cpp \
+    standardlife.cpp
 HEADERS += mainwindow.h \
     board.h \
     standardboard.h \
-    boarditem.h
+    boarditem.h \
+    life.h \
+    standardlife.h
 FORMS += mainwindow.ui

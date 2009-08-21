@@ -1,6 +1,7 @@
 #ifndef BOARDITEM_H
 #define BOARDITEM_H
 
+#include <QPointer>
 #include <QGraphicsItem>
 #include <QBrush>
 #include <QPen>
@@ -25,7 +26,7 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    Board *_board;
+    QPointer<Board> _board;
     QBrush _brush1;
     QBrush _brush2;
     QPen _pen1;

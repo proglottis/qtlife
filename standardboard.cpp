@@ -95,13 +95,13 @@ void StandardBoard::step()
             int cell = getCell(x, y);
             if(cell > 0) {
                 if(neigh == 2 || neigh == 3) {
-                    newcells[y * _width + x] = 1;
+                    ++newcells[y * _width + x];
                     continue;
                 }
             }
             else {
                 if(neigh == 3) {
-                    newcells[y * _width + x] = 1;
+                    ++newcells[y * _width + x];
                     continue;
                 }
             }

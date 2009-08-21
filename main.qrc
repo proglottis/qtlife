@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/actions" >
+        <file alias="play-pause" >data/icons/64/94.png</file>
+    </qresource>
+</RCC>

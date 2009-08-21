@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="margin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QGraphicsView" name="gameView"/>
     </item>
@@ -54,6 +57,10 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="main.qrc">
+     <normaloff>:/actions/play-pause</normaloff>:/actions/play-pause</iconset>
+   </property>
    <property name="text">
     <string>Play/Pause</string>
    </property>
@@ -68,6 +75,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="main.qrc"/>
+ </resources>
  <connections/>
 </ui>

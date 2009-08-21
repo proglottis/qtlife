@@ -17,3 +17,4 @@ HEADERS += mainwindow.h \
     life.h \
     standardlife.h
 FORMS += mainwindow.ui
+RESOURCES += main.qrc

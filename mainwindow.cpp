@@ -43,3 +43,8 @@ void MainWindow::on_actionPlay_Pause_toggled(bool )
         lifeTimer = 0;
     }
 }
+
+void MainWindow::on_actionExit_triggered()
+{
+    close();
+}

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>QtLife</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -22,7 +22,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Main Toolbar</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -31,6 +31,24 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionPlay_Pause"/>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>459</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuLife">
+    <property name="title">
+     <string>&amp;Life</string>
+    </property>
+    <addaction name="actionPlay_Pause"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuLife"/>
   </widget>
   <action name="actionPlay_Pause">
    <property name="checkable">
@@ -41,6 +59,11 @@
    </property>
    <property name="shortcut">
     <string>Space</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>E&amp;xit</string>
    </property>
   </action>
  </widget>

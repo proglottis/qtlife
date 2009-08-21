@@ -26,6 +26,7 @@ private:
     QGraphicsScene *scene;
 
 private slots:
+    void on_actionExit_triggered();
     void on_actionPlay_Pause_toggled(bool );
 };
 

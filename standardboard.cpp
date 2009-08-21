@@ -5,7 +5,8 @@ StandardBoard::StandardBoard(int width, int height, bool wrap)
           _width(width),
           _height(height),
           _wrap(wrap),
-          _cells(new int[width*height])
+          _cells(new int[width*height]),
+          _nextCells(new int[width*height])
 {
     for(int ii=0; ii<_width*_height; ii++) {
         _cells[ii] = 0;
@@ -15,6 +16,7 @@ StandardBoard::StandardBoard(int width, int height, bool wrap)
 StandardBoard::~StandardBoard()
 {
     delete [] _cells;
+    delete [] _nextCells;
 }
 
 int StandardBoard::getWidth() const
@@ -30,22 +32,6 @@ int StandardBoard::getHeight() const
 bool StandardBoard::isWrapped() const
 {
     return _wrap;
-}
-
-int StandardBoard::getNeighbourCount(int x, int y) const
-{
-    int count = 0;
-    for(int ii=-1; ii<2; ii++) {
-        for(int jj=-1; jj<2; jj++) {
-            if(ii == 0 && jj == 0) {
-                continue;
-            }
-            if(getCell(x+ii, y+jj) > 0) {
-                ++count;
-            }
-        }
-    }
-    return count;
 }
 
 int StandardBoard::getCell(int x, int y) const
@@ -88,32 +74,81 @@ void StandardBoard::toggleCell(int x, int y)
 
 void StandardBoard::step()
 {
-    int *newcells = new int[_width * _height];
     for(int x=0; x < _width; x++) {
         for(int y=0; y<_height; y++) {
             int neigh = getNeighbourCount(x, y);
             int cell = getCell(x, y);
             if(cell > 0) {
                 if(neigh == 2 || neigh == 3) {
-                    ++newcells[y * _width + x];
+                    setNextCell(x, y, 1);
                     continue;
                 }
             }
             else {
                 if(neigh == 3) {
-                    ++newcells[y * _width + x];
+                    setNextCell(x, y, 1);
                     continue;
                 }
             }
-            newcells[y * _width + x] = 0;
+            setNextCell(x, y, 0);
         }
     }
-    delete [] _cells;
-    _cells = newcells;
+    swap();
     emit stepped();
 }
 
 void StandardBoard::timerEvent(QTimerEvent *event)
 {
     step();
+}
+
+int StandardBoard::getNeighbourCount(int x, int y) const
+{
+    int count = 0;
+    for(int ii=-1; ii<2; ii++) {
+        for(int jj=-1; jj<2; jj++) {
+            if(ii == 0 && jj == 0) {
+                continue;
+            }
+            if(getCell(x+ii, y+jj) > 0) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
+int StandardBoard::getNextCell(int x, int y) const
+{
+    if(x < 0 || x >= _width || y < 0 || y >= _height) {
+        if(_wrap) {
+            x = (x + 2 * _width) % _width;
+            y = (y + 2 * _height) % _height;
+        }
+        else {
+            return 0;
+        }
+    }
+    return _nextCells[y * _width + x];
+}
+
+void StandardBoard::setNextCell(int x, int y, int value)
+{
+    if(x < 0 || x >= _width || y < 0 || y >= _height) {
+        if(_wrap) {
+            x = (x + 2 * _width) % _width;
+            y = (y + 2 * _height) % _height;
+        }
+        else {
+            return;
+        }
+    }
+    _nextCells[y * _width + x] = value;
+}
+
+void StandardBoard::swap()
+{
+    int *temp = _cells;
+    _cells = _nextCells;
+    _nextCells = temp;
 }

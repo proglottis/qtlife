@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass), boardTimer(0)
 {
-    board = new StandardBoard(15, 15, true);
+    board = new StandardBoard(100, 100, true);
     board->setParent(this);
 
     ui->setupUi(this);

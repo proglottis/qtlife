@@ -34,6 +34,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionPlay_Pause"/>
+   <addaction name="actionClear"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -49,7 +50,9 @@
      <string>&amp;Life</string>
     </property>
     <addaction name="actionPlay_Pause"/>
+    <addaction name="actionClear"/>
     <addaction name="actionExit"/>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuLife"/>
   </widget>
@@ -71,6 +74,15 @@
   <action name="actionExit">
    <property name="text">
     <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="icon">
+    <iconset resource="main.qrc">
+     <normaloff>:/actions/clear</normaloff>:/actions/clear</iconset>
+   </property>
+   <property name="text">
+    <string>Clear</string>
    </property>
   </action>
  </widget>

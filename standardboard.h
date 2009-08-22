@@ -20,6 +20,7 @@ public:
     virtual int getNeighbourCount(int x, int y) const;
     virtual void setCell(int x, int y, int value);
     virtual void toggleCell(int x, int y);
+    virtual void clear();
 
 private:
     int _width;

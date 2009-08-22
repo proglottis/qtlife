@@ -7,9 +7,7 @@ StandardBoard::StandardBoard(int width, int height, bool wrap)
           _wrap(wrap),
           _cells(new int[width*height])
 {
-    for(int ii=0; ii<_width*_height; ii++) {
-        _cells[ii] = 0;
-    }
+    clear();
 }
 
 StandardBoard::~StandardBoard()
@@ -83,5 +81,12 @@ void StandardBoard::toggleCell(int x, int y)
     }
     else {
         setCell(x, y, 1);
+    }
+}
+
+void StandardBoard::clear()
+{
+    for(int ii=0; ii<_width*_height; ii++) {
+        _cells[ii] = 0;
     }
 }

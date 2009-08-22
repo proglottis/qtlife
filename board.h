@@ -16,6 +16,7 @@ public:
     virtual int getCell(int x, int y) const = 0;
     virtual void setCell(int x, int y, int value) = 0;
     virtual void toggleCell(int x, int y) = 0;
+    virtual void clear() = 0;
 };
 
 #endif // BOARD_H

@@ -48,3 +48,9 @@ void MainWindow::on_actionExit_triggered()
 {
     close();
 }
+
+void MainWindow::on_actionClear_triggered()
+{
+    life->getBoard()->clear();
+    life->step();
+}

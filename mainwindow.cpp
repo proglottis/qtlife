@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "standardboard.h"
+#include "standardrule.h"
 #include "standardlife.h"
 #include "boarditem.h"
 
@@ -10,10 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     Board *board1 = new StandardBoard(100, 100, true);
     Board *board2 = new StandardBoard(100, 100, true);
-    life = new StandardLife(board1, board2);
+    Rule *rule = new StandardRule();
+    life = new StandardLife(board1, board2, rule);
     life->setParent(this);
     board1->setParent(life);
     board1->setParent(life);
+    rule->setParent(life);
 
     ui->setupUi(this);
 

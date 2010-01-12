@@ -9,12 +9,16 @@ SOURCES += main.cpp \
     standardboard.cpp \
     boarditem.cpp \
     life.cpp \
-    standardlife.cpp
+    standardlife.cpp \
+    rule.cpp \
+    standardrule.cpp
 HEADERS += mainwindow.h \
     board.h \
     standardboard.h \
     boarditem.h \
     life.h \
-    standardlife.h
+    standardlife.h \
+    rule.h \
+    standardrule.h
 FORMS += mainwindow.ui
 RESOURCES += main.qrc

@@ -1,7 +1,7 @@
 #include "standardlife.h"
 
-StandardLife::StandardLife(Board *board1, Board *board2)
-        : _curr(board1), _next(board2)
+StandardLife::StandardLife(Board *board1, Board *board2, Rule *rule)
+        : _curr(board1), _next(board2), _rule(rule)
 {
 }
 
@@ -16,23 +16,11 @@ Board *StandardLife::getBoard()
 
 void StandardLife::step()
 {
-    for(int x=0; x < _curr->getWidth(); x++) {
-        for(int y=0; y < _curr->getHeight(); y++) {
+    for(int x=0; x < _next->getWidth(); x++) {
+        for(int y=0; y < _next->getHeight(); y++) {
             int neigh = _curr->getNeighbourCount(x, y);
             int cell = _curr->getCell(x, y);
-            if(cell > 0) {
-                if(neigh == 2 || neigh == 3) {
-                    _next->setCell(x, y, 1);
-                    continue;
-                }
-            }
-            else {
-                if(neigh == 3) {
-                    _next->setCell(x, y, 1);
-                    continue;
-                }
-            }
-            _next->setCell(x, y, 0);
+            _next->setCell(x, y, _rule->checkCell(cell, neigh));
         }
     }
     swap();

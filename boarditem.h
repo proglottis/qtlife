@@ -24,6 +24,7 @@ public slots:
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QPointer<Board> _board;
@@ -31,6 +32,7 @@ private:
     QBrush _brush2;
     QPen _pen1;
     QPen _pen2;
+    int _mode;
 };
 
 #endif // BOARDITEM_H

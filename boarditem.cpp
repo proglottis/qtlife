@@ -8,7 +8,8 @@ BoardItem::BoardItem(Board *board)
           _brush1(QColor(0, 0, 255), Qt::SolidPattern),
           _brush2(QColor(204, 204, 204), Qt::SolidPattern),
           _pen1(QColor(0, 0, 255)),
-          _pen2(QColor(204, 204, 204))
+          _pen2(QColor(204, 204, 204)),
+          _mode(1)
 {
 }
 
@@ -45,6 +46,14 @@ void BoardItem::step(Board *board)
 
 void BoardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    _board->toggleCell(event->pos().x() / 11, event->pos().y() / 11);
-    update(boundingRect());
+    int cell = _board->getCell(event->pos().x() / 11, event->pos().y() / 11);
+    _mode = cell < 1?1:0;
+}
+
+void BoardItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(event->buttons() == Qt::LeftButton) {
+        _board->setCell(event->pos().x() / 11, event->pos().y() / 11, _mode);
+        update(boundingRect());
+    }
 }

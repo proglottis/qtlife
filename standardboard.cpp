@@ -10,9 +10,39 @@ StandardBoard::StandardBoard(int width, int height, bool wrap)
     clear();
 }
 
+StandardBoard::StandardBoard(const Board &other)
+        : Board(),
+          _width(other.getWidth()),
+          _height(other.getHeight()),
+          _wrap(other.isWrapped()),
+          _cells(new int[other.getWidth()*other.getHeight()])
+{
+    for(int x=0; x < _width; x++) {
+        for(int y=0; y < _width; y++) {
+            setCell(x, y, other.getCell(x, y));
+        }
+    }
+}
+
 StandardBoard::~StandardBoard()
 {
     delete [] _cells;
+}
+
+void StandardBoard::operator=(const Board &other)
+{
+    if(_width != other.getWidth() || _height != other.getHeight()) {
+        delete [] _cells;
+        _width = other.getWidth();
+        _height = other.getHeight();
+        _cells = new int[_width*_height];
+    }
+    _wrap = other.isWrapped();
+    for(int x=0; x < _width; x++) {
+        for(int y=0; y < _width; y++) {
+            setCell(x, y, other.getCell(x, y));
+        }
+    }
 }
 
 int StandardBoard::getWidth() const

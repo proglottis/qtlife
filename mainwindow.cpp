@@ -1,28 +1,33 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "simpleboardcache.h"
 #include "standardboard.h"
 #include "standardrule.h"
 #include "standardlife.h"
 #include "boarditem.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass), lifeTimer(0)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindowClass),
+      blankboard(new StandardBoard(100, 100, true)),
+      lifeTimer(0)
 {
-    Board *board1 = new StandardBoard(100, 100, true);
-    Board *board2 = new StandardBoard(100, 100, true);
+    BoardCache *cache = new SimpleBoardCache(50, blankboard);
+    Board *board = new StandardBoard(*blankboard);
     Rule *rule = new StandardRule();
-    life = new StandardLife(board1, board2, rule);
+    life = new StandardLife(board, rule, cache);
     life->setParent(this);
-    board1->setParent(life);
-    board1->setParent(life);
+    board->setParent(life);
     rule->setParent(life);
+
+    cache->setParent(this);
 
     ui->setupUi(this);
 
     scene = new QGraphicsScene(this);
-    BoardItem *boarditem = new BoardItem(life->getBoard());
-    QObject::connect(life, SIGNAL(stepped(Board *)), boarditem, SLOT(step(Board *)));
+    BoardItem *boarditem = new BoardItem(cache);
+    QObject::connect(life, SIGNAL(stepped(BoardCache *)), boarditem, SLOT(step(BoardCache *)));
     scene->addItem(boarditem);
 
     ui->gameView->setScene(scene);
@@ -32,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete blankboard;
 }
 
 void MainWindow::on_actionPlay_Pause_toggled(bool )
@@ -54,6 +60,6 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionClear_triggered()
 {
-    life->getBoard()->clear();
+    life->getCache()->clear(blankboard);
     life->step();
 }

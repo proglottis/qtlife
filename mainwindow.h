@@ -21,6 +21,7 @@ public:
 
 private:
     Ui::MainWindowClass *ui;
+    Board *blankboard;
     Life *life;
     int lifeTimer;
     QGraphicsScene *scene;

@@ -7,27 +7,28 @@
 #include <QPen>
 
 #include "board.h"
+#include "boardcache.h"
 
 class BoardItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 
 public:
-    BoardItem(Board *board);
+    BoardItem(BoardCache *cache);
     virtual ~BoardItem() {}
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
 public slots:
-    void step(Board *board);
+    void step(BoardCache *cache);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    QPointer<Board> _board;
+    QPointer<BoardCache> _cache;
     QBrush _brush1;
     QBrush _brush2;
     QPen _pen1;

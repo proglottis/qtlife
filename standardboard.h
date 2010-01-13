@@ -11,7 +11,11 @@ class StandardBoard : public Board
 
 public:
     StandardBoard(int width, int height, bool wrap);
+    StandardBoard(const Board &other);
+
     virtual ~StandardBoard();
+
+    virtual void operator=(const Board &other);
 
     virtual int getWidth() const;
     virtual int getHeight() const;

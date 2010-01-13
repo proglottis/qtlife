@@ -11,7 +11,9 @@ SOURCES += main.cpp \
     life.cpp \
     standardlife.cpp \
     rule.cpp \
-    standardrule.cpp
+    standardrule.cpp \
+    boardcache.cpp \
+    simpleboardcache.cpp
 HEADERS += mainwindow.h \
     board.h \
     standardboard.h \
@@ -19,6 +21,8 @@ HEADERS += mainwindow.h \
     life.h \
     standardlife.h \
     rule.h \
-    standardrule.h
+    standardrule.h \
+    boardcache.h \
+    simpleboardcache.h
 FORMS += mainwindow.ui
 RESOURCES += main.qrc

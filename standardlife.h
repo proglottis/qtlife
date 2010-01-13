@@ -5,26 +5,26 @@
 
 #include "life.h"
 #include "rule.h"
+#include "boardcache.h"
 
 class StandardLife : public Life
 {
     Q_OBJECT
 
 public:
-    StandardLife(Board *board1, Board *board2, Rule *rule);
+    StandardLife(Board *board, Rule *rule, BoardCache *cache);
     virtual ~StandardLife();
 
-    virtual Board *getBoard();
+    virtual BoardCache *getCache();
     virtual void step();
-    void swap();
 
 protected:
     void timerEvent(QTimerEvent *event);
 
 private:
-    QPointer<Board> _curr;
     QPointer<Board> _next;
     QPointer<Rule> _rule;
+    QPointer<BoardCache> _cache;
 };
 
 #endif // STANDARDLIFE_H

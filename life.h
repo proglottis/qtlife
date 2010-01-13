@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "board.h"
+#include "boardcache.h"
 
 class Life : public QObject
 {
@@ -12,11 +13,11 @@ class Life : public QObject
 public:
     virtual ~Life() {}
 
-    virtual Board *getBoard() = 0;
+    virtual BoardCache *getCache() = 0;
     virtual void step() = 0;
 
 signals:
-    void stepped(Board *board);
+    void stepped(BoardCache *cache);
 };
 
 #endif // LIFE_H

@@ -3,8 +3,10 @@
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
-BoardItem::BoardItem(Board *board)
-        : _board(board),
+#include "standardboard.h"
+
+BoardItem::BoardItem(BoardCache *cache)
+        : _cache(cache),
           _brush1(QColor(0, 0, 255), Qt::SolidPattern),
           _brush2(QColor(204, 204, 204), Qt::SolidPattern),
           _pen1(QColor(0, 0, 255)),
@@ -15,7 +17,7 @@ BoardItem::BoardItem(Board *board)
 
 QRectF BoardItem::boundingRect() const
 {
-    return QRectF(0, 0, 11 * _board->getWidth(), 11 * _board->getHeight());
+    return QRectF(0, 0, 11 * _cache->getBoard()->getWidth(), 11 * _cache->getBoard()->getHeight());
 }
 
 void BoardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -23,9 +25,10 @@ void BoardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-    for(int x=0; x<_board->getWidth(); x++) {
-        for(int y=0; y<_board->getHeight(); y++) {
-            if(_board->getCell(x, y) > 0) {
+    const Board *board = _cache->getBoard();
+    for(int x=0; x<board->getWidth(); x++) {
+        for(int y=0; y<board->getHeight(); y++) {
+            if(board->getCell(x, y) > 0) {
                 painter->setBrush(_brush1);
                 painter->setPen(_pen1);
             }
@@ -38,22 +41,29 @@ void BoardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     }
 }
 
-void BoardItem::step(Board *board)
+void BoardItem::step(BoardCache *cache)
 {
-    _board = board;
+    _cache = cache;
+    _cache->step();
     update(boundingRect());
 }
 
 void BoardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    int cell = _board->getCell(event->pos().x() / 11, event->pos().y() / 11);
+    Board *board = new StandardBoard(*_cache->getBoard());
+    int cell = board->getCell(event->pos().x() / 11, event->pos().y() / 11);
     _mode = cell < 1?1:0;
+    board->setCell(event->pos().x() / 11, event->pos().y() / 11, _mode);
+    _cache->clear(board);
+    update(boundingRect());
 }
 
 void BoardItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->buttons() == Qt::LeftButton) {
-        _board->setCell(event->pos().x() / 11, event->pos().y() / 11, _mode);
+        Board *board = new StandardBoard(*_cache->getBoard());
+        board->setCell(event->pos().x() / 11, event->pos().y() / 11, _mode);
+        _cache->clear(board);
         update(boundingRect());
     }
 }
